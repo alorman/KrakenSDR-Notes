@@ -27,17 +27,17 @@ I use `dump1090-fa` and `dump978-fa` to push data to sources and to `piaware` fo
 
 ## LiveATC
 ![](img/LiveATC.gif)  
-Being very near an airport (KGON), I recently started contributing to [LiveATC](https://www.liveatc.net/). I installed a separate antenna and use two tuners to cover both ground, tower and a few local frequncies. 
+Being very near an airport (KGON), I recently started contributing to [LiveATC](https://www.liveatc.net/). I installed a separate antenna and use two tuners to cover both ground, tower and a few local frequencies. 
 
 # Powering the Kraken SDR
 I run my pi on the official [Pi PoE hat](https://www.raspberrypi.com/products/poe-hat/).
-**Somewhat oddly** you can plug a USB-C -- USB-C cable into the pi and draw power to the Kraken. I was not expecting this to work, but it seems stable. Over POE, with the bias-T s set to on, the unit can draw ~15W over PoE.
+**Somewhat oddly** you can plug a USB-C -- USB-C cable into the pi and draw power to the Kraken. I was not expecting this to work, but it seems stable. Over POE, with the bias-T s set to on, the unit can draw ~18W over PoE.
 
 
 # Additional Hardware
 
 ## Antennas
-Clearly you need to match your antenna to your application. I've detailed what I've been using. All of these are mounted on a metal-roofed building that is approximately 30ft from the ground. **Remember to use sufficient lighting protection and filtering, otherwise stray lightning can blow up your hardware.**
+Clearly you need to match your antenna to your application. I've detailed what I've been using. All of these are mounted on a metal-roofed building that is approximately 30ft from the ground. **Remember to use sufficient lightning protection and filtering, otherwise stray lightning can blow up your hardware.**
 
 ## Filters 
 No matter how cool your SDR front-end is, you can't cheat physics (note; this applies in other fields as well). Reception range and quality of all signals is dramatically improved with LNAs and notch filters. 
@@ -46,12 +46,15 @@ No matter how cool your SDR front-end is, you can't cheat physics (note; this ap
 I use a [Shakespeare 8900](https://www.westmarine.com/shakespeare-mariner-8900-8--6db-vhf-antenna-6966071.html)  
 **NOTE: although the 6dB gain is helpful in a fixed application, it is probably too high for a dynamic platform.**
 
-**BIG NOTE: the included no-solder termination that is included with these antenna is GARBAGE. It will roughly fit a Times Microwave LMR-240 (and probably LMR-195) solder connection. I used one of these after experiencing frustration with the included connector.**  
+**BIG NOTE: the included no-solder termination that is included with these antenna is GARBAGE. It will roughly fit a [Times Microwave LMR-240 (and probably LMR-195) solder connection](https://www.mouser.com/ProductDetail/Amphenol-Times-Microwave-Systems/TC-240-SM-RP?qs=%252BRAvXJslkuCQvJzZbsUD4A%3D%3D). I used one of these after experiencing frustration with the included connector.**  
+
+
 **DO NOT USE THIS CONNECTOR**
 
 ![](img/pl-259.jpg)
 
-**DO NOT USE THIS CONNECTOR**
+**DO NOT EVEN THINK ABOUT USING THIS CONNECTOR**
+
 
 For filtering AIS I use the [Uptronics preamp for AIS](https://shop.wegmatt.com/collections/accessories/products/uputronics-filtered-preamplifier-for-ais). Author's note: Wegmatt is awesome and does great stuff.  
 This filter/LNA can be powered either by USB-C or bias-T power. 
@@ -140,6 +143,10 @@ serial = "00000384";
 ```
 
 This seems to work reliably. 
+
+#### Invoking RTL-Airband to run in the Background
+When running RTL-Airband as a service, make sure to run it with `-F -e` flags enabled. 
+
 
 # THE SERIOUSLY IMPORTANT BIT
 
