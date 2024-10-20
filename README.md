@@ -1,4 +1,4 @@
-# Notes on KrakenSDR in non-coherent Installations
+# Notes on KrakenSDR in Non-Coherent Installations
 
 If you have more money than sense (or are just opposed to buying standalone USB hubs), you can use the excellent KrakenSDR as 5x standalone RTL-SDR units. 
 
@@ -7,22 +7,32 @@ If you have more money than sense (or are just opposed to buying standalone USB 
 ## Intro
 The [KrakenSDR](https://www.krakenrf.com/) is the successor to the [KerberosSDR](https://www.rtl-sdr.com/ksdr/) and provides 5x coherent channels, USB hub, common clock and accessories in a lovely aluminum case with a cooling fan. The unit is very elegantly designed and would be right at home with mil-spec hardware. 
 
+![](img/krakensdr.jpg)  
+
 # Applications
 Normally one would use phase-coherent SDRs for DOA (direction of arrival) or passive radar. If, instead, you want to use it as 5x RTL-SDRs for normal SDR things, this guide will provide some notes.
 
 ## AIS
+![](img/AIS-catcher.png)  
 I recently discovered the excellent [AIS Catcher](https://github.com/jvde-github/AIS-catcher) suite.  
 This suite has the best visualization and most comprehensive options of any AIS suite that I've seen to date.  
 This unit can use RTL-SDRs (and others) to listen to 162 Mhz AIS signals and decode them.  
 I contribute to [AIShub](https://www.aishub.net/), [MarineTraffic](https://www.marinetraffic.com/) and [AIS Catcher](https://aiscatcher.org) directly. 
 
 ## ADS-B and UAT
+![](img/Skyaware.jpg)  
 I actively contribute to [FlightAware](https://www.flightaware.com/), [ADS-B Exchange](https://globe.adsbexchange.com/) for both 1099 Mhz ADS-B and 978 Mhz UAT data. 
 
 I use `dump1090-fa` and `dump978-fa` to push data to sources and to `piaware` for local plotting. Installing these on the latest raspbian can be a bit of a pain, especially if you don't want to use their pre-built image, so consult the internet for the latest steps to compile. 
 
 ## LiveATC
+![](img/LiveATC.gif)  
 Being very near an airport (KGON), I recently started contributing to [LiveATC](https://www.liveatc.net/). I installed a separate antenna and use two tuners to cover both ground, tower and a few local frequncies. 
+
+# Powering the Kraken SDR
+I run my pi on the official [Pi PoE hat](https://www.raspberrypi.com/products/poe-hat/).
+**Somewhat oddly** you can plug a USB-C -- USB-C cable into the pi and draw power to the Kraken. I was not expecting this to work, but it seems stable. Over POE, with the bias-T s set to on, the unit can draw ~15W over PoE.
+
 
 # Additional Hardware
 
@@ -33,9 +43,15 @@ Clearly you need to match your antenna to your application. I've detailed what I
 No matter how cool your SDR front-end is, you can't cheat physics (note; this applies in other fields as well). Reception range and quality of all signals is dramatically improved with LNAs and notch filters. 
 
 ### AIS
-I use a [Shakespeare 8900](https://www.westmarine.com/shakespeare-mariner-8900-8--6db-vhf-antenna-6966071.html) **NOTE: although the 6dB gain is helpful in a fixed application, it is probably too high for a dynamic platform.**
+I use a [Shakespeare 8900](https://www.westmarine.com/shakespeare-mariner-8900-8--6db-vhf-antenna-6966071.html)  
+**NOTE: although the 6dB gain is helpful in a fixed application, it is probably too high for a dynamic platform.**
 
-**BIG NOTE: the included no-solder termination that is included with these antenna is GARBAGE. It will roughly fit a Times Microwave LMR-240 (and probably LMR-195) solder connection. I used one of these after experiencing frustration with the included connector.**
+**BIG NOTE: the included no-solder termination that is included with these antenna is GARBAGE. It will roughly fit a Times Microwave LMR-240 (and probably LMR-195) solder connection. I used one of these after experiencing frustration with the included connector.**  
+**DO NOT USE THIS CONNECTOR**
+
+![](img/pl-259.jpg)
+
+**DO NOT USE THIS CONNECTOR**
 
 For filtering AIS I use the [Uptronics preamp for AIS](https://shop.wegmatt.com/collections/accessories/products/uputronics-filtered-preamplifier-for-ais). Author's note: Wegmatt is awesome and does great stuff.  
 This filter/LNA can be powered either by USB-C or bias-T power. 
