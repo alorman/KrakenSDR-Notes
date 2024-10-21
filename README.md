@@ -129,6 +129,23 @@ sudo sed -i 's/driver=rtlsdr[^ ]* /driver=rtlsdr,serial=00000978 /' /etc/default
 
 Again, with the correct serial. 
 
+##### Autostarting Dump1090 and Dump978
+The `Dump1090` and `Dump978` service units can occasionally change underneath, with the software overwriting the service.  
+In order for the bias-T service to fully execute I had to modify the service overrides to wait 30 seconds. 
+
+Use `sudo systemctl edit dump1090-fa.service` to edit the overrides.  
+
+Then between the comments add:  
+```
+[Unit]
+Requires=set-bias-t.service
+After=set-bias-t.service
+
+[Service]
+ExecStartPre=/bin/sleep 30
+```
+Remember to run `sudo systemctl daemon-reload` on changes.  
+
 #### RTL-Airband
 Although LiveATC's instructions don't reflect this yet, RTL-Airband can use either device index or serial number.
 From their [manpage](https://github.com/charlie-foxtrot/RTLSDR-Airband/wiki/Configuring-RTLSDR-devices).
@@ -145,7 +162,20 @@ serial = "00000384";
 This seems to work reliably. 
 
 #### Invoking RTL-Airband to run in the Background
-When running RTL-Airband as a service, make sure to run it with `-F -e` flags enabled. 
+When running RTL-Airband as a service, make sure to have the `ExecStart` line include the `-F -e` flags. 
+I added the same modification to the service override as above.  
+Use `sudo systemctl edit dump1090-fa.service` to edit the overrides.  
+
+Then between the comments add:  
+```
+[Unit]
+Requires=set-bias-t.service
+After=set-bias-t.service
+
+[Service]
+ExecStartPre=/bin/sleep 30
+```
+Remember to run `sudo systemctl daemon-reload` on changes.  
 
 
 # THE SERIOUSLY IMPORTANT BIT
