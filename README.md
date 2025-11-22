@@ -187,7 +187,7 @@ Remember to run `sudo systemctl daemon-reload` on changes.
 #### Noise Source
 The KrakenSDR includes a noise source that is useful for synchronizing the coherent receivers and calibrating DoA systems. We are not using it here, BUT: if it is on, none of our reception will work. 
 
-After some experimenting and reading the KrakenSDR [wiki page](https://github.com/krakenrf/krakensdr_docs/wiki/12.-Appendix#krakensdr-manual-bias-tee-control) and [this forum thread](https://forum.krakenrf.com/t/bias-t-enable-in-5-x-sdr-mode/815), all of the above are incorrect. 
+After some experimenting and reading the KrakenSDR [wiki page](https://github.com/krakenrf/krakensdr_docs/wiki/12.-Appendix#krakensdr-manual-bias-tee-control) and [this forum thread](https://forum.krakenrf.com/t/bias-t-enable-in-5-x-sdr-mode/815), both of these links are incorrect.
 
 #### To Toggle Noise Generation
 Use the following invocation of `rtl_biast`  
